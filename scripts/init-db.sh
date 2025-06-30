@@ -6,7 +6,7 @@ set -e
 # 用于避免继续执行后续命令导致错误或数据污染
 
 # 用你的公网 SurrealDB 地址替换，比如用 ngrok 暴露本地端口
-SURREALDB_URL="http://192.168.0.72:8000"
+SURREALDB_URL="https://620c-221-248-160-222.ngrok-free.app"
 
 # 连接 SurrealDB 所需的用户名和密码（默认是 root/root）
 USER="root"

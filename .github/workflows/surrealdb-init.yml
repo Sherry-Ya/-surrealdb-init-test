@@ -1,0 +1,32 @@
+name: Init SurrealDB
+# 工作流的名称，在 GitHub Actions 页面中会显示为标题
+
+on:
+  workflow_dispatch:
+  # 表示此工作流不会自动触发，必须通过 GitHub 页面上的 “Run workflow” 按钮手动触发
+
+jobs:
+  init-db:
+    # 定义一个名为 init-db 的任务（Job）
+
+    runs-on: ubuntu-latest
+    # 该任务会在 GitHub 提供的 ubuntu-latest 虚拟环境中运行
+
+    steps:
+      - name: Checkout repo
+        # 步骤 1：检出仓库代码
+
+        uses: actions/checkout@v3
+        # 使用 GitHub 官方提供的 actions/checkout 动作（v3 版），将你的代码拉取到虚拟机中
+
+      - name: Make script executable
+        # 步骤 2：赋予初始化脚本可执行权限
+
+        run: chmod +x scripts/init-db.sh
+        # 在 Linux 中脚本默认不可执行，需要通过 chmod +x 来赋予执行权限
+
+      - name: Run SurrealDB init script
+        # 步骤 3：执行 Shell 脚本来初始化 SurrealDB
+
+        run: ./scripts/init-db.sh
+        # 直接执行我们在脚本中编写的初始化命令

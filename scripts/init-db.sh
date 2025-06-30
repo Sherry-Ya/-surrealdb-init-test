@@ -1,26 +1,21 @@
 #!/bin/bash
+# 指定使用 bash 解释器执行该脚本
+
 set -e
+# 出错立即退出
 
-SURREALDB_URL="https://620c-221-248-160-222.ngrok-free.app"
-USER="root"
-PASS="root"
+# 用你的 SurrealDB 地址（Ngrok 或其他公网地址）
+SURREALDB_URL="https://your-ngrok-url.ngrok-free.app"
 
-# 查询 SurrealDB 版本
-SQL="RETURN version();"
+echo "🚀 正在请求 SurrealDB 版本信息..."
 
-echo "🚀 测试连接：RETURN version()"
-
-response=$(curl -s -w "%{http_code}" -o /tmp/response.json \
-  --request POST "$SURREALDB_URL/sql" \
-  --user "$USER:$PASS" \
-  --header "Content-Type: application/json" \
-  --data "{\"query\":\"$SQL\"}")
+# 调用 SurrealDB 的 /version 接口（无需认证，无需 SQL）
+response=$(curl -s -w "%{http_code}" -o /tmp/version.txt "$SURREALDB_URL/version")
 
 if [ "$response" != "200" ]; then
   echo "❌ 请求失败，HTTP 状态码: $response"
-  cat /tmp/response.json
   exit 1
 fi
 
-echo "✅ 请求成功，SurrealDB 版本："
-cat /tmp/response.json
+echo "✅ SurrealDB 可用，版本信息如下："
+cat /tmp/version.txt

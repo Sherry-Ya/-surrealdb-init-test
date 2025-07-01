@@ -27,6 +27,5 @@ create_db=$(curl -s -X POST "$SURREALDB_URL/sql" \
   -u "$USER:$PASS" \
   -H "Accept: application/json" \
   -H "Content-Type: text/plain" \
-  -H "NS: $NAMESPACE" \
-  -d "DEFINE DATABASE $DATABASE;")
+  -d "USE NAMESPACE $NAMESPACE; DEFINE DATABASE $DATABASE;")
 echo "✅ 创建数据库结果：$create_db"

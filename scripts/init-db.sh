@@ -5,7 +5,7 @@ set -e
 # 当脚本执行中遇到任何命令返回非 0（出错）时，立即终止整个脚本
 
 # SurrealDB 的本地地址（也可以换成 ngrok 公网地址）
-SURREALDB_URL="http://192.168.0.72:8000"
+SURREALDB_URL="https://620c-221-248-160-222.ngrok-free.app"
 
 echo "🚀 正在请求 SurrealDB 版本信息..."
 

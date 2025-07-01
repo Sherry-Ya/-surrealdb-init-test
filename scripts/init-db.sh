@@ -5,7 +5,7 @@ SURREALDB_URL="https://620c-221-248-160-222.ngrok-free.app"
 USER="root"
 PASS="root"
 NAMESPACE=${GITHUB_SHA:0:7}   # 使用 commit hash 的前7位作为命名空间
-DATABASE="momo"
+DATABASE=${GITHUB_SHA:0:7}
 
 echo "🚀 正在请求 SurrealDB 版本信息..."
 version_response=$(curl -s --location --request GET "$SURREALDB_URL/version" \

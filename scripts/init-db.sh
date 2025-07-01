@@ -7,9 +7,8 @@ USER="root"
 PASS="root"
 
 # ====== NAMESPACE / DATABASE 使用 commit hash 作为唯一命名空间 ======
-: "${GITHUB_SHA:=localtest1234567}"
-NAMESPACE="${GITHUB_SHA:0:7}"
-DATABASE="${GITHUB_SHA:0:7}"
+NAMESPACE=${GITHUB_SHA:0:7}
+DATABASE=${GITHUB_SHA:0:7}
 
 # ====== .surql 文件路径 ======
 SURQL_FILE="./init/export.surql"

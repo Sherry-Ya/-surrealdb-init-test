@@ -40,14 +40,17 @@ echo "✅ 创建数据库结果：$create_db"
 # ====== 使用 HTTP API 导入 .surql 文件 ======
 if [ -f "$SURQL_FILE" ]; then
   echo ""
-  echo "📤 正在导入数据文件 $SURQL_FILE 到 $NAMESPACE/$DATABASE ..."
+  echo "📤 拼接 USE 语句后导入数据文件 $SURQL_FILE 到 $NAMESPACE/$DATABASE ..."
+
+  payload=$(printf "USE NS %s;\nUSE DB %s;\n\n" "$NAMESPACE" "$DATABASE")
+  payload+=$(cat "$SURQL_FILE")
+
   import_response=$(curl --http1.1 -s -X POST "$SURREALDB_URL/sql" \
     -u "$USER:$PASS" \
-    -H "NS: $NAMESPACE" \
-    -H "DB: $DATABASE" \
     -H "Accept: application/json" \
     -H "Content-Type: text/plain" \
-    --data-binary "@$SURQL_FILE")
+    --data-binary "$payload")
+
   echo "✅ 数据导入结果：$import_response"
 else
   echo "⚠️ 找不到文件 $SURQL_FILE，跳过数据导入"

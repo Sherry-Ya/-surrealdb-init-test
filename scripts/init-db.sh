@@ -21,9 +21,10 @@ echo "✅ SurrealDB 版本：$version_response"
 echo ""
 echo "📦 正在初始化 NAMESPACE=$NAMESPACE, DATABASE=$DATABASE..."
 
-# 注意这里 Content-Type 改成 text/plain，data 是纯文本 SurrealQL
+# 添加 Accept: application/json 头
 init_response=$(curl -s -X POST "$SURREALDB_URL/sql" \
   -u "$USER:$PASS" \
+  -H "Accept: application/json" \
   -H "Content-Type: text/plain" \
   -d "DEFINE NAMESPACE $NAMESPACE; DEFINE DATABASE $DATABASE;")
 

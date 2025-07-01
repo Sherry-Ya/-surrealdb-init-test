@@ -37,25 +37,16 @@ create_db=$(curl -s -X POST "$SURREALDB_URL/sql" \
   -d "USE NAMESPACE $NAMESPACE; DEFINE DATABASE $DATABASE;")
 echo "✅ 创建数据库结果：$create_db"
 
-# ====== 安装 surreal CLI（自动放到 /usr/local/bin） ======
-if ! command -v surreal &> /dev/null; then
-  echo ""
-  echo "🔧 未检测到 surreal CLI，正在安装..."
-  curl -sSf https://install.surrealdb.com | sh -s -- --path /usr/local/bin
-  echo "✅ Surreal CLI 安装完成"
-fi
-
-# ====== 导入 .surql 文件 ======
+# ====== 使用 HTTP API 导入 .surql 文件 ======
 if [ -f "$SURQL_FILE" ]; then
   echo ""
-  echo "📤 开始导入数据文件 $SURQL_FILE ..."
-  surreal import \
-    --conn "$SURREALDB_URL" \
-    --user "$USER" \
-    --pass "$PASS" \
-    --ns "$NAMESPACE" \
-    --db "$DATABASE" \
-    "$SURQL_FILE"
+  echo "📤 通过 HTTP API 导入数据文件 $SURQL_FILE ..."
+  curl -s -X POST "$SURREALDB_URL/sql" \
+    -u "$USER:$PASS" \
+    -H "NS: $NAMESPACE" \
+    -H "DB: $DATABASE" \
+    -H "Content-Type: text/plain" \
+    --data-binary "@$SURQL_FILE"
   echo "✅ 数据导入完成"
 else
   echo "⚠️ 找不到文件 $SURQL_FILE，跳过数据导入"

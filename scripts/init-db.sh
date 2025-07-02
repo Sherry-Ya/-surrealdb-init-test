@@ -2,7 +2,7 @@
 set -e
 
 # ====== SurrealDB 连接配置 ======
-SURREALDB_URL="https://620c-221-248-160-222.ngrok-free.app"
+SURREALDB_URL="https://9f3b-221-248-160-222.ngrok-free.app"
 USER="root"
 PASS="root"
 
